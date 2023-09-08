@@ -1,0 +1,25 @@
+
+.calc-body
+{
+    background-color: gray;
+}
+footer
+{
+    display: block;
+}
+.footer
+{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+.footer img
+{
+    height: 25px;
+    width: 25px;
+}
+.footer h2
+{
+    font-size: medium;
+}
