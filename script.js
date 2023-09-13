@@ -2,5 +2,6 @@
 document.addEventListener("DOMContentLoaded",function() {
     const currOperation = document.querySelector("curr-operation");
     const result = document.querySelector("result");
+    const buttons = document.querySelectorAll("btn");
 
 });
