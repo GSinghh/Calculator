@@ -2,6 +2,7 @@ let firstNumber = '';
 let secondNumber = '';
 let operator = null;
 let float = false;
+let currentValue = 0;
 
 const clearBtn = document.getElementById('clear');
 const deleteBtn = document.getElementById('delete');
@@ -24,7 +25,7 @@ operators.forEach(operator => {
 clearBtn.addEventListener('click', clearAll);
 deleteBtn.addEventListener('click', deleteVal);
 equals.addEventListener('click', equalsTo);
-decimal.addEventListener('click',checkDecimal);
+decimal.addEventListener('click', checkDecimal);
 
 
 function storeNumber(event)
@@ -114,19 +115,24 @@ function equalsTo()
     switch(operator)
     {
         case '+':
-            result.innerText = roundAccordingly(add(firstNumber,secondNumber));
+            currentValue = roundAccordingly(add(firstNumber,secondNumber));
+            result.innerText = currentValue;
             break;
         case '-':
-            result.innerText = roundAccordingly(subtraction(firstNumber,secondNumber));
+            currentValue = roundAccordingly(subtraction(firstNumber,secondNumber));
+            result.innerText = currentValue;
             break;
         case '÷':
-            result.innerText = roundAccordingly(division(firstNumber,secondNumber));
+            currentValue = roundAccordingly(division(firstNumber,secondNumber));
+            result.innerText = currentValue;
             break;
         case '*':
-            result.innerText = roundAccordingly(multiply(firstNumber,secondNumber));
+            currentValue = roundAccordingly(multiply(firstNumber,secondNumber));
+            result.innerText = currentValue;
             break;
     }
     updateScreen();
+    clearVals();
 }
 
 function checkDecimal() {
@@ -163,6 +169,12 @@ function roundAccordingly(value)
     {
         return roundedValue.toFixed(1);
     }
+}
+
+const clearVals = () => {
+    secondNumber = '';
+    operator = null;
+    firstNumber = currentValue;
 }
 
 const add = (num1, num2) => {
