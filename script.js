@@ -10,6 +10,7 @@ const currOperation = document.getElementById('curr-operation');
 const numbers = document.querySelectorAll('.number');
 const operators = document.querySelectorAll('.operator');
 const equals = document.querySelector('.equals');
+const decimal = document.querySelector('.decimal');
 
 
 numbers.forEach(number => {
@@ -23,6 +24,7 @@ operators.forEach(operator => {
 clearBtn.addEventListener('click', clearAll);
 deleteBtn.addEventListener('click', deleteVal);
 equals.addEventListener('click', equalsTo);
+decimal.addEventListener('click',checkDecimal);
 
 
 function storeNumber(event)
@@ -53,7 +55,7 @@ function storeOperator(event)
     /* This function stores the operator */
 
     operator = event.target.textContent;
-    // console.log("This is the current operation: ", operator);
+    updateScreen();
 }
 
 function clearAll()
@@ -102,18 +104,66 @@ function deleteVal()
 
 function equalsTo()
 {
-    if (operator == "+")
+
+    /* Since our nums are strings, we can parse them as floats since this covers both behaviors
+        of them being integers or decimals. */
+
+    firstNumber = parseFloat(firstNumber);
+    secondNumber = parseFloat(secondNumber);
+
+    switch(operator)
     {
-        add(firstNumber,secondNumber);
+        case '+':
+            result.innerText = roundAccordingly(add(firstNumber,secondNumber));
+            break;
+        case '-':
+            result.innerText = roundAccordingly(subtraction(firstNumber,secondNumber));
+            break;
+        case '÷':
+            result.innerText = roundAccordingly(division(firstNumber,secondNumber));
+            break;
+        case '*':
+            result.innerText = roundAccordingly(multiply(firstNumber,secondNumber));
+            break;
     }
-    else if(operator == "-")
-        console.log("Subtraction");
-    else if(operator == "*")
-        console.log("Multiplacation")
-    else if(operator == "÷")
-        console.log("Division");
+    updateScreen();
 }
 
+function checkDecimal() {
+    if(!operator){
+        firstNumber += '.';
+        result.innerText = firstNumber;
+    }
+    else {
+        secondNumber += '.';
+        result.innerText = secondNumber;
+    }
+}
+
+function updateScreen()
+{
+    if(secondNumber == '')
+    {
+        currOperation.innerText = firstNumber + " " + operator;
+    }
+    else
+    {
+        currOperation.innerText = firstNumber + " " + operator + " " + secondNumber + " =";
+    }
+}
+
+function roundAccordingly(value)
+{
+    const roundedValue = Math.round(value * 10) / 10;
+    if (Number.isInteger(roundedValue))
+    {
+        return roundedValue.toFixed(0);
+    }
+    else
+    {
+        return roundedValue.toFixed(1);
+    }
+}
 
 const add = (num1, num2) => {
     return num1 + num2;
